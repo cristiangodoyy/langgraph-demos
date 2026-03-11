@@ -14,4 +14,8 @@ dependencies = [
     "langchain==1.0.0",
     "python-dotenv>=1.2.1",
     "tavily-python>=0.7.23",
+    "pytest",
+    "tiktoken",
+    "beautifulsoup4",
+    "langchainhub",
 ]
