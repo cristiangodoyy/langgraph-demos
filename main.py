@@ -9,3 +9,4 @@ from graph.graph import app
 if __name__ == '__main__':
     print('Hello advanced RAG')
     print(app.invoke(input={"question": "what is agent memory?"}))
+    #print(app.invoke(input={"question": "What's the capital of Argentina?"}))
