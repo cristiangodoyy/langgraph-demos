@@ -17,14 +17,14 @@ def web_search(state: GraphState) -> Dict[str, Any]:
     question = state["question"]
     documents = state["documents"]
 
-    tavily_results = web_search_tool.invoke({"query": question})
+    tavily_results = web_search_tool.invoke({"query": question})['results']
     
-    # joined_tavily_result = "\n".join(
-    #     [tavily_result["content"] for tavily_result in tavily_results]
-    # ) Daba error: TypeError: string indices must be integers, not 'str', pero se soluciona con 
-    # la linea siguiente
-    
-    joined_tavily_result = "\n".join(tavily_results)
+    joined_tavily_result = "\n".join(
+        [tavily_result["content"] for tavily_result in tavily_results]
+    ) #Daba error: TypeError: string indices must be integers, not 'str', pero se soluciona con 
+    #la linea siguiente
+
+    #joined_tavily_result = "\n".join(tavily_results)
     web_results = Document(page_content=joined_tavily_result)
     if documents is not None:
         documents.append(web_results)
@@ -34,5 +34,5 @@ def web_search(state: GraphState) -> Dict[str, Any]:
     return {"documents": documents, "question": question}
 
 
-# if __name__ == "__main__":
-#     web_search(state={"question": "agent memory", "documents": None})
+if __name__ == "__main__":
+    web_search(state={"question": "agent memory", "documents": None})
