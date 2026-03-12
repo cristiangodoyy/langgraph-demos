@@ -29,7 +29,7 @@ splitted_documents = text_splitter.split_documents(docs_list)
 
 # Inicializa el modelo de embeddings configura la instancia con el modelo "text-embedding-3-large" 
 embeddings = OpenAIEmbeddings(openai_api_key=os.environ.get("OPENAI_API_KEY"), model="text-embedding-3-large")
-    
+
 
 print("ingesting...")
 #PineconeVectorStore.from_documents(texts, embeddings, index_name=os.environ["INDEX_NAME"])
