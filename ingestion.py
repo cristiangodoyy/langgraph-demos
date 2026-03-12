@@ -33,7 +33,7 @@ embeddings = OpenAIEmbeddings(openai_api_key=os.environ.get("OPENAI_API_KEY"), m
 
 print("ingesting...")
 #PineconeVectorStore.from_documents(texts, embeddings, index_name=os.environ["INDEX_NAME"])
-PGVector.from_documents(  # metodo para crear una base de datos vectorial a partir de documentos.
+vectorstore = PGVector.from_documents(  # metodo para crear una base de datos vectorial a partir de documentos.
     documents=splitted_documents,  # toma una lista de documentos de texto spliteados
     embedding=embeddings,  # genera representaciones vectoriales los textos spliteados, los document 
     connection="postgresql+psycopg://postgres:postgres@localhost:5432/vectordb",
@@ -41,3 +41,6 @@ PGVector.from_documents(  # metodo para crear una base de datos vectorial a part
     use_jsonb=True,  # Almacena los metadatos de los documentos en formato jsonb de PostgreSQL para búsquedas más rápidas y eficientes. 
 )
 print("finish")
+
+# devuelve un retriever que consultará el vectorstore y traerá los 3 documentos más relevantes para una consulta.
+retriever = vectorstore.as_retriever(search_kwargs={"k": 3})

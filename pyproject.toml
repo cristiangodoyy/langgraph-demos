@@ -21,4 +21,5 @@ dependencies = [
     "langchain-community",
     "langchain-pinecone>=0.2.11",
     "langchain-postgres>=0.0.17",
+    "langchain-chroma",
 ]
