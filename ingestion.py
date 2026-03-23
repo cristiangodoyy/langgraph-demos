@@ -35,7 +35,7 @@ print("ingesting...")
 #PineconeVectorStore.from_documents(texts, embeddings, index_name=os.environ["INDEX_NAME"])
 vectorstore = PGVector.from_documents(  # metodo para crear una base de datos vectorial a partir de documentos.
     documents=splitted_documents,  # toma una lista de documentos de texto spliteados
-    embedding=embeddings,  # genera representaciones vectoriales los textos spliteados, los document 
+    embedding=embeddings,  # genera representaciones vectoriales los textos spliteados, los documents
     connection="postgresql+psycopg://postgres:postgres@localhost:5432/vectordb",
     collection_name='ia_docs',  #  Define el nombre de la tabla/colección donde se guardan.
     use_jsonb=True,  # Almacena los metadatos de los documentos en formato jsonb de PostgreSQL para búsquedas más rápidas y eficientes. 
@@ -43,4 +43,19 @@ vectorstore = PGVector.from_documents(  # metodo para crear una base de datos ve
 print("finish")
 
 # devuelve un retriever que consultará el vectorstore y traerá los 3 documentos más relevantes para una consulta.
-retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+#retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
+retriever = vectorstore.as_retriever()  # es el cliente para consultar a la base de datos
+# este retriever se puede invocar con "retriever.invoke(question)"
+
+# vectorstore = Chroma.from_documents(
+#     documents=doc_splits,
+#     collection_name="rag-chroma",
+#     embedding=OpenAIEmbeddings(),
+#     persist_directory="./.chroma",
+# )
+
+# retriever = Chroma(
+#     collection_name="rag-chroma",
+#     persist_directory="./.chroma",
+#     embedding_function=OpenAIEmbeddings(),
+# ).as_retriever()

@@ -7,7 +7,7 @@ from graph.state import GraphState
 def grade_documents(state: GraphState) -> Dict[str, Any]:
     """
         Determines whether the retrieved documents are relevant to the question
-        If any document is not relevant, we will set a flag to run web search
+        If any document is not relevant, we will set a flag "web_search" to run web search
 
         Args:
             state (dict): The current graph state
@@ -22,7 +22,7 @@ def grade_documents(state: GraphState) -> Dict[str, Any]:
 
     filtered_docs = []
     web_search = False
-    for d in documents:
+    for d in documents:  # retrieval_grader determina cual es el grado de los documentos 
         score = retrieval_grader.invoke(
             {"question": question, "document": d.page_content}
         )
@@ -34,4 +34,5 @@ def grade_documents(state: GraphState) -> Dict[str, Any]:
             print("---GRADE: DOCUMENT NOT RELEVANT---")
             web_search = True
             continue
+
     return {"documents": filtered_docs, "question": question, "web_search": web_search}
